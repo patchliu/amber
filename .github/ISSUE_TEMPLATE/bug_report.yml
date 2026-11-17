@@ -1,0 +1,24 @@
+name: Bug report
+description: Report incorrect behavior in an implemented Amber feature.
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened?
+      description: Include the command, input spec, actual result, and expected result.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Share the smallest input that reproduces the problem. Remove private model data and credentials.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Amber revision, Python version, and relevant backend or device.

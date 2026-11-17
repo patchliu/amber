@@ -1,0 +1,18 @@
+name: Feature request
+description: Describe a concrete spec, search, verification, or reuse need.
+title: "feat: "
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: What operator request or workflow cannot be expressed today?
+    validations:
+      required: true
+  - type: textarea
+    id: desired_behavior
+    attributes:
+      label: Desired behavior
+      description: Include the relevant target, input domain, numeric constraints, and evidence needs.
+    validations:
+      required: true
