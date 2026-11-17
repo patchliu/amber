@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "amber-operator-registry"
+version = "0.1.0"
+description = "Spec-guided operator search and reuse"
+requires-python = ">=3.12"
+
+[tool.setuptools.packages.find]
+include = ["amber_spec*", "amber_house*"]
