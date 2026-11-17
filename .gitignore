@@ -1,0 +1,43 @@
+# Python bytecode and package outputs
+__pycache__/
+*.py[cod]
+*.egg-info/
+.build/
+build/
+dist/
+
+# Local environments and tool caches
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Local credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+*.local
+
+# Frontend dependencies and outputs
+node_modules/
+apps/console/dist/
+apps/console/.vite/
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*~
+
+# Temporary files from local runs
+*.log
+*.tmp
+/tmp/
