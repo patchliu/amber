@@ -25,7 +25,7 @@ python -m amber_house --root .amber-local --port 8000
 In another terminal, run the [end-to-end example](examples/local_flow.py). It starts from a Spec, uploads a source file, searches, downloads, and shows local cache reuse.
 
 ```bash
-python examples/local_flow.py
+python -m examples.local_flow
 python -m unittest discover -s tests -v
 ```
 

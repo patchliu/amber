@@ -21,7 +21,7 @@ python -m amber_house --root .amber-local --port 8000
 另开终端运行[端到端示例](examples/local_flow.py)，完成 Spec 编译、上传、检索、下载和缓存复用。
 
 ```bash
-python examples/local_flow.py
+python -m examples.local_flow
 python -m unittest discover -s tests -v
 ```
 
