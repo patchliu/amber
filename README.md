@@ -1,24 +1,38 @@
 # Amber
 
-**让高性能算子的搜索成果可以被理解、验证和再次使用。**
+**Make high-performance operator search results understandable, verifiable, and reusable.**
 
-一个算子的名字和输入输出形状，通常不足以判断它能否用于真实模型。中间舍入、量化位置、归约顺序、输入域和设备环境都会改变结果或性能。Amber 计划用可检查的 **Spec** 描述这些要求，并用 **AmberHouse** 保存实现、适用条件和验证记录。下次遇到相同或相容的需求时，可以先查找已有成果，再决定是否构建或继续优化。
+An operator name and tensor shape rarely tell the whole story. Intermediate rounding, quantization placement, reduction order, input domains, and the target device can all change correctness or performance. Amber uses a checkable **Spec** to describe those requirements. **AmberHouse** stores implementations, applicability constraints, and evidence so the next request can start from existing work.
 
 ```text
-需求 → Spec → 检索与匹配解释 → 实现与证据 → 目标环境测量 → 复用或继续搜索
+Request → Spec → Search and match report → Implementation → Download or continue optimizing
 ```
 
-## 项目方向
+## What works today
 
-- **规约优先**：表达计算结构、数值处理和输入域，允许用户只约束真正重要的部分。
-- **证据透明**：区分实现声明、测试、静态检查与证明；未知属性保持未知。
-- **性能有上下文**：测量关联硬件、构建、输入分布和完整执行计划。
-- **结果可沉淀**：公开 AmberHouse 与团队私有实例使用同一套概念和协议。
+The local MVP accepts a deliberately small JSON Spec language. It canonicalizes a spec, matches a computation graph and its scalar attributes, checks whether an implementation covers the requested dimension ranges, and explains rejected or unknown properties. AmberHouse accepts UTF-8 source uploads, stores them by digest, persists a query cache, and serves downloads. A small Python client verifies downloaded content and caches it locally.
 
-首批目标平台是 NVIDIA CUDA 与华为 Ascend，后续扩展 AMD ROCm。当前仓库从规约与本地检索的最小闭环开始，详细架构见 [设计文档](docs/design/AMBER_DESIGN.zh-CN.md)。
+A matching source is reported as a **candidate**. Source declarations are not correctness proofs; this MVP does not execute kernels, verify numerical behavior, or rank device performance. The full system design is in the [architecture proposal](docs/design/AMBER_DESIGN.zh-CN.md).
 
-## 参与开发
+## Try the local flow
 
-代码约定、提交格式和测试要求见 [AGENTS.md](AGENTS.md)。欢迎围绕真实算子需求提出问题，尤其是数值规约、输入域与验证证据无法准确表达的案例。
+Requires Python 3.12 or newer. No third-party runtime packages are needed.
 
-项目仍处于早期实现阶段。设计文档中的服务、插件和工作流是规划目标，仓库内已实现的能力以实际代码和示例为准。
+```bash
+python -m amber_house --root .amber-local --port 8000
+```
+
+In another terminal, run the [end-to-end example](examples/local_flow.py). It starts from a Spec, uploads a source file, searches, downloads, and shows local cache reuse.
+
+```bash
+python -m examples.local_flow
+python -m unittest discover -s tests -v
+```
+
+The same registry directory can be used by a newly started service process; query cache entries remain available until a new upload changes the catalog revision. Use a fresh directory for an isolated instance.
+
+## Direction
+
+Amber is intended to grow toward public and self-hosted private registries, independent evidence checks, target-specific builds, and real workload measurements. NVIDIA CUDA and Huawei Ascend are the first planned device backends, with AMD ROCm later. The current implementation is a local search-and-reuse foundation.
+
+See [中文说明](README.zh-CN.md) and [development guidelines](AGENTS.md). Issues and pull requests that include a concrete operator contract, numeric edge case, or real workload are especially useful.

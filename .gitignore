@@ -41,3 +41,7 @@ apps/console/.vite/
 *.log
 *.tmp
 /tmp/
+
+# Local AmberHouse example state
+/.amber-local/
+/examples/.amber-cache/
